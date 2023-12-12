@@ -11,6 +11,6 @@ ADD . /home/app
 # Migrate the database
 RUN python manage.py migrate
 
-CMD python manage.py runserver 0.0.0.0:3000
+CMD python manage.py runserver 0.0.0.0:443
 
-EXPOSE 3000
+EXPOSE 443
