@@ -15,7 +15,7 @@ ADD . /home/app
 # Migrate the database
 RUN python manage.py migrate
 
-RUN gunicorn webappexample.wsgi:application --bind "0.0.0.0:8080" --daemon
+RUN gunicorn webappexample.wsgi:application --bind "0.0.0.0:8081" --daemon
 
 EXPOSE 8080
 
