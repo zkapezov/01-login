@@ -14,4 +14,4 @@ ADD . /home/app
 
 EXPOSE 8080
 
-CMD entrypoint.sh
+CMD /home/app/entrypoint.sh
