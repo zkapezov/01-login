@@ -12,11 +12,6 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 ADD . /home/app
 
-# Migrate the database
-RUN python manage.py migrate
-
-RUN gunicorn webappexample.wsgi:application --bind "0.0.0.0:8081" --daemon
-
 EXPOSE 8080
 
-CMD nginx -g 'daemon off;'
+CMD entrypoint.sh
