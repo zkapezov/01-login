@@ -14,5 +14,5 @@ ADD . /home/app
 
 EXPOSE 8080
 
-RUN chmod +x config/entrypoint.sh
+RUN chmod +x /home/app/entrypoint.sh
 CMD /home/app/entrypoint.sh
