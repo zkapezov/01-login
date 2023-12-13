@@ -99,9 +99,10 @@ def userhub_webhook(request):
         return JsonResponse(data, status=200)
     if action == "events.handle":
         data = json.loads(request.body)
-        logger.info("events.handle")
-        logger.info(data)
-        user = data.get("user")
+        logger.error("events.handle")
+        logger.error(data)
+        users_chaged = data.get("usersChanged")
+        user = users_chaged.get("user")
         user_id = user.get("id")
         subscription = user.get("subscription")
         user_sub = Subscription.objects.filter(user_id=user_id).first()
