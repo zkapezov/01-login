@@ -27,8 +27,9 @@ oauth.register(
 
 
 def index(request):
-    user_id = request.session.get("user_id")
-    user_sub = Subscription.objects.filter(user_id=user_id).first()
+    auth0_userid = request.session.get("auth0_userid")
+    user_email = request.session.get("user_email")
+    user_sub = Subscription.objects.filter(user_email=user_email).first()
 
     return render(
         request,
@@ -36,7 +37,7 @@ def index(request):
         context={
             "session": request.session.get("user"),
             "pretty": json.dumps(request.session.get("user"), indent=4),
-            "user_id": user_id,
+            "user_id": auth0_userid,
             "user_sub": user_sub
         },
     )
@@ -46,7 +47,8 @@ def callback(request):
     token = oauth.auth0.authorize_access_token(request)
     request.session["user"] = token
     auth0_userid = token.get("userinfo").get("sub")
-    request.session["user_id"] = auth0_userid
+    request.session["auth0_userid"] = auth0_userid
+    request.session['user_email'] = token.get("userinfo").get("email")
     return redirect(request.build_absolute_uri(reverse("index")))
 
 
@@ -103,12 +105,12 @@ def userhub_webhook(request):
         logger.error(data)
         users_chaged = data.get("usersChanged")
         user = users_chaged.get("user")
-        user_id = user.get("id")
+        user_email = user.get("email")
         subscription = user.get("subscription")
-        user_sub = Subscription.objects.filter(user_id=user_id).first()
+        user_sub = Subscription.objects.filter(user_email=user_email).first()
         if user_sub is None:
             Subscription.objects.create(
-                user_id=user_id,
+                user_email=user_email,
                 state=subscription.get("state")
             )
         else:
