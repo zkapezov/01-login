@@ -12,6 +12,8 @@ import logging
 import requests
 
 oauth = OAuth()
+logger = logging.getLogger(__name__)
+
 
 oauth.register(
     "auth0",
