@@ -70,7 +70,7 @@ def userhub_callback(request):
     api_url = "https://api.userhub.com/admin/v1"
     api_key = os.environ["USERHUB_ADMIN_API_KEY"]
     connection_id = os.environ["USERHUB_USERS_PROVIDER_CONNECTION_ID"]
-    portal_url = request.args.get("portalUrl")
+    portal_url = request.GET["portalUrl"]
  
     res = requests.post(
         url=f"{api_url}/users/{user_id}@{connection_id}:createPortalSession",
