@@ -7,6 +7,7 @@
     {% if session %}
     <h1>Welcome {{session.userinfo.name}}!</h1>
     <p><a href="{% url 'logout' %}" id="qsLogoutBtn">Logout</a></p>
+    <p><a href="https://dev-2siq3s5tpgdpwz.userhub.app" id="qsLogoutBtn">Enter UserHub Portal</a></p>
     <div><pre>{{pretty}}</pre></div>
     <div>UserID: {{user_id}}</div>
     {% if user_sub.state %}
