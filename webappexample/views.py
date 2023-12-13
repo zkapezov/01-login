@@ -90,13 +90,14 @@ def userhub_callback(request):
 @csrf_exempt
 def userhub_webhook(request):
     action = request.GET.get("action")
+    logger.info("action: %s", action)
     if action == "challenge":
         data = json.loads(request.body)
         return JsonResponse(data, status=200)
     if action == "events.handle":
         data = json.loads(request.body)
-        logging.info("events.handle")
-        logging.info(data)
+        logger.info("events.handle")
+        logger.info(data)
     return JsonResponse({}, status=400)
 
 
