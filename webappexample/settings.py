@@ -28,6 +28,7 @@ INSTALLED_APPS = [
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
+    'webappexample',
 ]
 
 MIDDLEWARE = [
@@ -121,7 +122,7 @@ LOGGING = {
     "handlers": {
         "file": {
             "class": "logging.FileHandler",
-            "filename": "/home/app/info.log",
+            "filename": "info.log",
         },
     },
     "loggers": {

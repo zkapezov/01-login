@@ -1,5 +1,7 @@
 import json
 import os
+import logging
+import requests
 from authlib.integrations.django_client import OAuth
 from django.conf import settings
 from django.http import JsonResponse
@@ -7,9 +9,7 @@ from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
 from urllib.parse import quote_plus, urlencode
-import logging
-
-import requests
+from .models import Subscription
 
 oauth = OAuth()
 logger = logging.getLogger(__name__)
@@ -27,6 +27,8 @@ oauth.register(
 
 
 def index(request):
+    user_id = request.session.get("user_id")
+    user_sub = Subscription.objects.filter(user_id=user_id).first()
 
     return render(
         request,
@@ -34,7 +36,8 @@ def index(request):
         context={
             "session": request.session.get("user"),
             "pretty": json.dumps(request.session.get("user"), indent=4),
-            "user_id": request.session.get("user_id"),
+            "user_id": user_id,
+            "user_sub": user_sub
         },
     )
 
@@ -98,6 +101,19 @@ def userhub_webhook(request):
         data = json.loads(request.body)
         logger.info("events.handle")
         logger.info(data)
+        user = data.get("user")
+        user_id = user.get("id")
+        subscription = user.get("subscription")
+        user_sub = Subscription.objects.filter(user_id=user_id).first()
+        if user_sub is None:
+            Subscription.objects.create(
+                user_id=user_id,
+                state=subscription.get("state")
+            )
+        else:
+            user_sub.state = subscription.get("state")
+            user_sub.save()
+        return JsonResponse(data, status=200)
     return JsonResponse({}, status=400)
 
 

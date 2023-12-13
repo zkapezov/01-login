@@ -9,6 +9,9 @@
     <p><a href="{% url 'logout' %}" id="qsLogoutBtn">Logout</a></p>
     <div><pre>{{pretty}}</pre></div>
     <div>UserID: {{user_id}}</div>
+    {% if user_sub.state == 'ACTIVE' %}
+    <div>Yay you are subscribed!</div>
+    {% endif %}
     {% else %}
     <h1 id="profileDropDown">Welcome Guest</h1>
     <p><a href="{% url 'login' %}" id="qsLoginBtn">Login</a></p>
