@@ -73,7 +73,7 @@ def logout(request):
     )
 
 def userhub_callback(request):
-    user_id = request.session.get("user_id")
+    user_id = request.session.get("auth0_userid")
     if not user_id:
         return redirect(request.build_absolute_uri(reverse("index")))
  
