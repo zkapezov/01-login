@@ -59,7 +59,7 @@ def logout(request):
 def userhub_callback(request):
     user_id = request.session.get("user_id")
     if not user_id:
-        return redirect(request.build_absolute_uri(reverse("index"))
+        return redirect(request.build_absolute_uri(reverse("index")))
  
     api_url = "https://api.userhub.com/admin/v1"
     api_key = os.environ["USERHUB_ADMIN_API_KEY"]
