@@ -1,7 +1,7 @@
 import json
 from authlib.integrations.django_client import OAuth
 from django.conf import settings
-from django.shortcuts import redirect, render, redirect
+from django.shortcuts import redirect, render
 from django.urls import reverse
 from urllib.parse import quote_plus, urlencode
 
@@ -55,3 +55,24 @@ def logout(request):
             quote_via=quote_plus,
         ),
     )
+
+def userhub_callback(request):
+    user_id = request.session.get("user_id")
+    if not user_id:
+        return redirect(request.build_absolute_uri(reverse("index"))
+ 
+    api_url = "https://api.userhub.com/admin/v1"
+    api_key = os.environ["USERHUB_ADMIN_API_KEY"]
+    connection_id = os.environ["USERHUB_USERS_PROVIDER_CONNECTION_ID"]
+    portal_url = request.args.get("portalUrl")
+ 
+    res = requests.post(
+        url=f"{api_url}/users/{user_id}@{connection_id}:createPortalSession",
+        headers={"Authorization": f"Bearer {api_key}"},
+        json={"portalUrl": portal_url},
+    )
+    res.raise_for_status()
+    res_data = response.json()
+ 
+    return redirect(res_data["redirectUrl"])
+
