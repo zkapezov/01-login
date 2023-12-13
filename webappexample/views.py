@@ -7,6 +7,7 @@ from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
 from urllib.parse import quote_plus, urlencode
+import logging
 
 import requests
 
@@ -92,7 +93,8 @@ def userhub_webhook(request):
         return JsonResponse(data, status=200)
     if action == "events.handle":
         data = json.loads(request.body)
-        print (data)
+        logging.info("events.handle")
+        logging.info(data)
     return JsonResponse({}, status=400)
 
 
