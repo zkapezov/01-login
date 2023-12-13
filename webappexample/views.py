@@ -5,6 +5,7 @@ from django.conf import settings
 from django.http import JsonResponse
 from django.shortcuts import redirect, render
 from django.urls import reverse
+from django.views.decorators.csrf import csrf_exempt
 from urllib.parse import quote_plus, urlencode
 
 import requests
@@ -83,6 +84,7 @@ def userhub_callback(request):
  
     return redirect(res_data["redirectUrl"])
 
+@csrf_exempt
 def userhub_webhook(request):
     action = request.GET.get("action")
     if action == "challenge":
