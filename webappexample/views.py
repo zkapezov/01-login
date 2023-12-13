@@ -1,9 +1,12 @@
 import json
+import os
 from authlib.integrations.django_client import OAuth
 from django.conf import settings
 from django.shortcuts import redirect, render
 from django.urls import reverse
 from urllib.parse import quote_plus, urlencode
+
+import requests
 
 oauth = OAuth()
 
@@ -73,7 +76,7 @@ def userhub_callback(request):
         json={"portalUrl": portal_url},
     )
     res.raise_for_status()
-    res_data = response.json()
+    res_data = res.json()
  
     return redirect(res_data["redirectUrl"])
 
