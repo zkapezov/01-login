@@ -38,8 +38,7 @@ def callback(request):
     token = oauth.auth0.authorize_access_token(request)
     request.session["user"] = token
     auth0_userid = token.get("userinfo").get("sub")
-    userhub_connection_id = "conn_qUXP6DFvxHhVsY"
-    request.session["user_id"] = f"{auth0_userid}@{userhub_connection_id}"
+    request.session["user_id"] = auth0_userid
     return redirect(request.build_absolute_uri(reverse("index")))
 
 
