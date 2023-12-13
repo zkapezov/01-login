@@ -132,3 +132,5 @@ LOGGING = {
         },
     },
 }
+
+STATIC_URL = 'static/'
