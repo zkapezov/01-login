@@ -124,4 +124,10 @@ LOGGING = {
             "filename": "/home/app/info.log",
         },
     },
+    "loggers": {
+        "django": {
+            "handlers": ["file"],
+            "propagate": True,
+        },
+    },
 }
