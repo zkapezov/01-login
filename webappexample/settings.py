@@ -120,16 +120,8 @@ LOGGING = {
     "disable_existing_loggers": False,
     "handlers": {
         "file": {
-            "level": "INFO",
             "class": "logging.FileHandler",
             "filename": "/home/app/info.log",
-        },
-    },
-    "loggers": {
-        "django": {
-            "handlers": ["file"],
-            "level": "INFO",
-            "propagate": True,
         },
     },
 }
