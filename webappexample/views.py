@@ -2,6 +2,7 @@ import json
 import os
 from authlib.integrations.django_client import OAuth
 from django.conf import settings
+from django.http import JsonResponse
 from django.shortcuts import redirect, render
 from django.urls import reverse
 from urllib.parse import quote_plus, urlencode
@@ -81,4 +82,13 @@ def userhub_callback(request):
     res_data = res.json()
  
     return redirect(res_data["redirectUrl"])
+
+def userhub_webhook(request):
+    action = request.GET.get("action")
+    if action == "challenge":
+        data = json.loads(request.body)
+        return JsonResponse(data, status=200)
+    return JsonResponse({}, status=400)
+
+
 
