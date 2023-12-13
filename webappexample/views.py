@@ -90,6 +90,9 @@ def userhub_webhook(request):
     if action == "challenge":
         data = json.loads(request.body)
         return JsonResponse(data, status=200)
+    if action == "events.handle":
+        data = json.loads(request.body)
+        print (data)
     return JsonResponse({}, status=400)
 
 
